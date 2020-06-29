@@ -1,0 +1,165 @@
+
+<!DOCTYPE html>
+{% load static %}
+<head>
+	<link rel="stylesheet" type="text/css" href="{%static 'exam.css' %}"></head>
+	<script src="{% static 'jquery-3.3.1.min.js' %}"></script>
+<body onload = "timer()">
+<!--<script>timer();</script>-->
+<h1>Quiz</h1><br>
+<strong>Time Left<p id="timer"> </p>seconds</strong>
+{% for i, x in qset.items %}
+<div id="quiz" class='{{i}}'></div>
+<div class="quiz-container" class='{{i}}'>
+<h1 class='{{i}}'><b class='{{i}}' id = '{{i}}'> {{x.question}}</b></h1>
+<br class='{{i}}'><br class='{{i}}'>
+<input type="radio" onclick="cal(this)" class='{{i}}' name = "'+ {{x.option1}} +'"  value="{{x.option1}}+{{x.answer}}"> <strong class='{{i}}' > {{x.option1}} </strong><br class='{{i}}'><br class='{{i}}'>
+<input type="radio" onclick="cal(this)" class='{{i}}' name = "'+ {{x.option1}} +'"  value="{{x.option2}}+{{x.answer}}"> <strong class='{{i}}' > {{x.option2}} </strong><br class='{{i}}'><br class='{{i}}'>
+<input type="radio" onclick="cal(this)" class='{{i}}' name = "'+ {{x.option1}} +'"  value="{{x.option3}}+{{x.answer}}"> <strong class='{{i}}' > {{x.option3}} </strong><br class='{{i}}'><br class='{{i}}'>
+<input type="radio" onclick="cal(this)" class='{{i}}' name = "'+ {{x.option1}} +'"  value="{{x.option4}}+{{x.answer}}"> <strong class='{{i}}' > {{x.option4}} </strong><br class='{{i}}'><br class='{{i}}'>
+
+{% endfor %}
+    <form action="results/">
+        <input type="submit"  class="42" value="Click here to see results"></form>
+</div>
+
+
+<script type="text/javascript">
+var qNumber = 1;
+var distance = 2;
+var correct =0;
+var wrong = 0;
+var unattempted = 0;
+var a="",b="";
+var attempt = [40];
+for(var m = 1;m<='{{numQ}}';m++)
+attempt[m] = 0;
+var flag = 0;
+for(var ind = 2; ind <= '{{numQ}}'; ind++)
+{
+	$("." + ind).toggle();
+}
+var t =42;
+$("." + t).toggle();
+
+function cal(hmm)
+{
+  a ="";
+  b = "";
+  flag = 0;
+  var p = hmm.value;
+  var n = p.split("+");
+
+  if(n[0]==n[1] && attempt[qNumber]==0)
+  {
+  attempt[qNumber] = 1;
+  correct++;
+  }
+
+  else if( n[0]!=n[1] && attempt[qNumber]==0)
+  {
+  attempt[qNumber]  =1;
+  wrong++;
+  }
+
+
+  <!--alert(hmm.value+" "+correct+" "+wrong+" ");-->
+  <!--var answer = document.getElementsByName("opt");-->
+  <!--if(answer[0].checked)-->
+  <!--{-->
+   <!--var t = answer[0].value;-->
+   <!--alert(t);-->
+  <!--}-->
+  <!--else if(answer[1].checked)-->
+  <!--{-->
+    <!--var t = answer[1].value;-->
+    <!--alert(t);-->
+  <!--}-->
+  <!--else if(answer[2].checked)-->
+  <!--{-->
+   <!--var t = answer[2].value;-->
+   <!--alert(t);-->
+  <!--}-->
+  <!--else if(answer[3].checked)-->
+  <!--{-->
+    <!--var t = answer[3].value;-->
+    <!--alert(t);-->
+  <!--}-->
+}
+
+function timer()
+{
+    if(qNumber>=40)
+    distance = 0;
+    else if(qNumber>=20)
+    distance = 1;
+    else
+    distance = 2;
+	var l =setInterval("counter()",1000);
+	if(qNumber>=40)
+	clearInterval(l);
+}
+
+function changeQuestion()
+{
+	if(qNumber == 40)
+	{
+	document.getElementById("timer").innerHTML = "Exam completed";
+	var unattempted  = 40 - correct - wrong;
+
+    var myData = [ unattempted, wrong ];
+    localStorage.setItem( "c", correct );
+    localStorage.setItem( "w", wrong );
+    localStorage.setItem( "u", unattempted );
+	<!--alert("correct " + correct + " wrong "+ wrong + "unattempted " + unattempted);-->
+	$("." + t).toggle();
+	qNumber++;
+	return;
+
+	}
+	if(qNumber>40)
+	return;
+	qNumber++;
+	if(qNumber>=40)
+	distance = 0;
+	else if(qNumber>=20)
+	distance = 1
+	else
+	distance = 2;
+	for(var ind = '{{numQ}}'; ind >= 1; ind--)
+	{
+		if(ind == qNumber - 1 || ind == qNumber)
+		{
+			$("." + ind).toggle();
+		}
+	}
+
+}
+
+function counter()
+{
+        var seconds = distance;
+	    document.getElementById("timer").innerHTML = seconds;
+	    if (distance < 0) {
+        if(qNumber<20)
+	    document.getElementById("timer").innerHTML = 2;
+	    else if(qNumber>=20&&qNumber<40)
+	    document.getElementById("timer").innerHTML = 1;
+	    else
+	    document.getElementById("timer").innerHTML = "Exam completed";
+	    	changeQuestion();
+	    	if(qNumber>40)
+	    	return;
+            }
+            distance--;
+}
+
+</script>
+
+
+
+</body>
+<style>
+</style>
+
+</html>

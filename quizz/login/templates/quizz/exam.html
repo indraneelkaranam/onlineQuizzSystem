@@ -1,0 +1,43 @@
+
+<!DOCTYPE html>
+<script type="text/javascript">
+var distance = 10;
+function timer()
+{
+        distance = 10;
+	setInterval("counter()",1000);
+}
+function counter()
+{
+            var seconds = distance;
+	    document.getElementById("timer").innerHTML = seconds;
+	    if (distance < 0) {
+
+	    document.getElementById("timer").innerHTML = "Completed";
+            return;
+            }
+            distance--;
+}
+</script>
+{% load static %}
+<head><link rel="stylesheet" type="text/css" href="{%static "exam.css" %}"></head>
+<body onload = "timer()">
+<!--<script>timer();</script>-->
+<h1>Quiz</h1>
+<h3>Time Left:<p id="timer"> </p>sec</h3>
+{% for x in qset %}
+<div id="quiz"></div>
+<div class="quiz-container">
+<h1><b> {{x.question}}</b></h1><br>
+<input type="radio" name = "opt" > <h2> {{x.option1}} </h2><br>
+<input type="radio" name = "opt" > <h2> {{x.option2}} </h2><br>
+<input type="radio" name = "opt" > <h2> {{x.option3}} </h2><br>
+<input type="radio" name = "opt" > <h2> {{x.option4}} </h2><br>
+{% endfor %}
+
+</div>
+</body>
+<style>
+</style>
+
+</html>

@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+{% load static %}
+    <head>
+        <title>Student Results</title>
+        <link rel="stylesheet" type="text/css" href="{% static "result.css" %}">
+
+    </head>
+    <body>
+          <center> {% csrf_token %} <h2>Report Card</h2> </center>
+
+          <center> {% csrf_token %} <table border="1" id="tb">  </center>
+          <tr>{% csrf_token %}<td>CORRECT</td><td> <p id="myText1"></p></td></tr>
+                <tr>{% csrf_token %}<td>WRONG  </td><td><p id="myText2">"  "</p></td></tr>
+                <tr>{% csrf_token %}<td>NOT ATTEMPTED</td><td><p id="myText3">"  "</p></td></tr>
+                <tr>{% csrf_token %}<td>FINAL SCORE</td><td><p id="myText4">"  "</p></td></tr>
+            </table>
+          <br><br>
+            <h2> ---Every Exam Is A Learning Experience---</h2>
+            <script>
+            var firstData = localStorage.getItem("c");
+
+            var secondData = localStorage.getItem("w");
+            <!--secondData = 10;-->
+            document.getElementById("myText2").innerHTML = secondData;
+            var thirdData = localStorage.getItem("u");
+            <!--thirdData = 40 - 20 - 10;-->
+            document.getElementById("myText3").innerHTML = thirdData;
+            <!--firstData = 20;-->
+            <!--secondData = 10;-->
+            var forthData = firstData*1 - secondData*0.25;
+            document.getElementById("myText1").innerHTML = firstData;
+            <!--alert('firstData: ' + firstData + '\nsecondData: ' + secondData + '\nthirdData: '+ thirdData + '\nforthData' + forthData );-->
+
+            document.getElementById("myText4").innerHTML = forthData;
+            <!--alert('firstData: ' + firstData + '\nsecondData: ' + secondData + '\nthirdData :' + thirdData + '\nforthData :' + forthData);-->
+        </script>
+    </body>
+</html>

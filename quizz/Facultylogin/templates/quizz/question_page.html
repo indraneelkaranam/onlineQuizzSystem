@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head><link rel="stylesheet" type="text/css" href="{% static "question_page.css" %}"></head>
+<body>
+
+      <form action="submitee/" method="POST">
+          {% csrf_token %}
+         <h3>Question :</h3>
+         <input type="text" name="q" size="50" value="{{ dep }}"><br>
+         <h3>Option1 :</h3>
+         <input type="text" name="o1"><br>
+         <h3>Option2 :</h3>
+         <input type="text" name="o2"><br>     
+         <h3>Option3 :</h3>
+         <input type="text" name="o3"><br>
+         <h3>Option4 :</h3>
+         <input type="text" name="o4"><br>         
+         <h3>ANSWER :</h3>
+         <input type="text" name="ans"><br>
+          <h3>department :</h3>
+          <input type="text" name="dp" value="{{ dep }}"><<br><br>
+         <input type="submit" value="Submit"><br>
+
+      </form>
+</body>
+</html>
